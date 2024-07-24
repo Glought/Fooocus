@@ -565,6 +565,11 @@ with shared.gradio_root:
 
                 image_number = gr.Slider(label='Image Number', minimum=1, maximum=modules.config.default_max_image_number, step=1, value=modules.config.default_image_number)
 
+                sampler_name = gr.Dropdown(label='Sampler', choices=flags.sampler_list,
+                                           value=modules.config.default_sampler)
+                scheduler_name = gr.Dropdown(label='Scheduler', choices=flags.scheduler_list,
+                                             value=modules.config.default_scheduler)
+
                 output_format = gr.Radio(label='Output Format',
                                          choices=flags.OutputFormat.list(),
                                          value=modules.config.default_output_format)
@@ -712,10 +717,7 @@ with shared.gradio_root:
                         clip_skip = gr.Slider(label='CLIP Skip', minimum=1, maximum=flags.clip_skip_max, step=1,
                                                  value=modules.config.default_clip_skip,
                                                  info='Bypass CLIP layers to avoid overfitting (use 1 to not skip any layers, 2 is recommended).')
-                        sampler_name = gr.Dropdown(label='Sampler', choices=flags.sampler_list,
-                                                   value=modules.config.default_sampler)
-                        scheduler_name = gr.Dropdown(label='Scheduler', choices=flags.scheduler_list,
-                                                     value=modules.config.default_scheduler)
+
                         vae_name = gr.Dropdown(label='VAE', choices=[modules.flags.default_vae] + modules.config.vae_filenames,
                                                      value=modules.config.default_vae, show_label=True)
 
