@@ -154,6 +154,13 @@ with shared.gradio_root:
                     if isinstance(default_prompt, str) and default_prompt != '':
                         shared.gradio_root.load(lambda: default_prompt, outputs=prompt)
 
+                with gr.Column(scale=1,min_width=3):
+                    clear_button = gr.Button(label="Clear", value="Clear", elem_classes='type_row', elem_id='clear_button')
+
+                    def clear_clicked():
+                        return ""
+
+                    clear_button.click(clear_clicked, outputs=prompt)
                 with gr.Column(scale=3, min_width=0):
                     generate_button = gr.Button(label="Generate", value="Generate", elem_classes='type_row', elem_id='generate_button', visible=True)
                     reset_button = gr.Button(label="Reconnect", value="Reconnect", elem_classes='type_row', elem_id='reset_button', visible=False)
@@ -178,16 +185,9 @@ with shared.gradio_root:
                     stop_button.click(stop_clicked, inputs=currentTask, outputs=currentTask, queue=False, show_progress=False, _js='cancelGenerateForever')
                     skip_button.click(skip_clicked, inputs=currentTask, outputs=currentTask, queue=False, show_progress=False)
             with gr.Row(elem_classes='advanced_check_row'):
-                clear_button = gr.Button(label="Clear", value="Clear", container=False, elem_classes='min_check', elem_id='clear_button')
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=False, container=False, elem_classes='min_check')
                 enhance_checkbox = gr.Checkbox(label='Enhance', value=modules.config.default_enhance_checkbox, container=False, elem_classes='min_check')
                 advanced_checkbox = gr.Checkbox(label='Advanced', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
-
-                def clear_clicked():
-                    promptText = ""
-                    return promptText
-
-                clear_button.click(clear_clicked, outputs=prompt)
             with gr.Row(visible=False) as image_input_panel:
                 with gr.Tabs():
                     with gr.TabItem(label='Upscale or Variation') as uov_tab:
