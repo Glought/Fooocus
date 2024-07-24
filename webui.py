@@ -154,7 +154,7 @@ with shared.gradio_root:
                     if isinstance(default_prompt, str) and default_prompt != '':
                         shared.gradio_root.load(lambda: default_prompt, outputs=prompt)
 
-                with gr.Column(scale=1,min_width=3):
+                with gr.Column(scale=1, min_width=0):
                     clear_button = gr.Button(label="Clear", value="Clear", elem_classes='type_row', elem_id='clear_button')
 
                     def clear_clicked():
@@ -635,6 +635,18 @@ with shared.gradio_root:
                                                        queue=False,
                                                        show_progress=False).then(
                     lambda: None, _js='()=>{refresh_style_localization();}')
+            with gr.Tab(label='Prompts'):
+                with gr.Group():
+                    with gr.Row():
+                        add_prompt_to_list = gr.Button(label='Add to list', value="Add to list")
+                        remove_selected_prompt_from_list = gr.Button(label='Remove selected prompt', value='Remove from list')
+                    with gr.Row():
+                         gr.DataFrame(headers=["Prompts"],
+                                                  datatype=['str'],
+                                                  row_count=(5,'dynamic'),
+                                                  col_count=(1,'fixed')
+                                                  )
+
 
             with gr.Tab(label='Models'):
                 with gr.Group():
